@@ -1,13 +1,10 @@
 const express = require('express')
-let routesIndex = require('./routes/index');
-let routesUsers = require('./routes/users');
+const consign = require('consign')
 
 let app = express();
 
-//ADD O NOME DA ROTA PARA FACILITAR NO CAMINHO
-
-app.use(routesIndex);
-app.use('/users',routesUsers);
+//ADD O CONSIGN E A PASTA Q QREMOS E ONDE QREMOS A INCLUSAO  
+consign().include('routes').into(app);
 
 
 app.listen(2000, ()=>{

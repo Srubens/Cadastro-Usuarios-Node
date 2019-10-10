@@ -1,36 +1,31 @@
-let express = require('express');
-let routes = express.Router();
+module.exports = (app) =>{
 
-//RETIROU O NOME DA ROTA PARA COLOCAR NO INDEX PRINCIPAL
+    app.get('/users', (req, res) => {
 
-routes.get('/', (req, res) => {
-    
-    res.statusCode = 200
-    res.setHeader('Content-Type', 'application/json')
-    res.json({
-        
-        users: [{
-            id: 1,
-            name:'Rubens Filipe',
-            email:'rubensfilipe6@gmail.com'
-        }]
-    
+        res.statusCode = 200
+        res.setHeader('Content-Type', 'application/json')
+        res.json({
+
+            users: [{
+                id: 1,
+                name: 'Rubens Filipe',
+                email: 'rubensfilipe6@gmail.com'
+            }]
+
+        })
+
     })
 
-})
+    app.get('/users/admin', (req, res) => {
 
-routes.get('/admin', (req, res) => {
-    
-    res.statusCode = 200
-    res.setHeader('Content-Type', 'application/json')
-    res.json({
-        
-        users: []
-    
+        res.statusCode = 200
+        res.setHeader('Content-Type', 'application/json')
+        res.json({
+
+            users: []
+
+        })
+
     })
 
-})
-
-
-
-module.exports = routes;
+};
