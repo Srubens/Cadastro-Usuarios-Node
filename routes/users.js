@@ -28,4 +28,10 @@ module.exports = (app) =>{
 
     })
 
+    app.post('/users', (req, res) => {
+
+        res.json(req.body)
+
+    })
+
 };
