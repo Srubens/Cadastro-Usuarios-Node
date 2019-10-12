@@ -4,13 +4,15 @@ let db = new nedb({ filename: 'users.db', autoload: true })
 
 module.exports = (app) =>{
 
-    app.get('/users', (req, res) => {
+    let route = app.route('/users')
+    let routeId= app.route('/users/:id')
 
-        //RECUPERANDO DADOS DA BASE
+    route.get((req, res) => {
+
+        //RECUPERANDO DADOS DA BASE TODOS USUARIOS
         db.find({}).sort({name:-1}).exec((err,users)=>{
             if (err) {
-                console.log(`Erro: ${err}`)
-                res.status(400).json({ erro: err })
+                app.utils.error.send(err, req, res, 400)
             } else {
 
                 res.statusCode = 200
@@ -36,7 +38,7 @@ module.exports = (app) =>{
 
     })
 
-    app.post('/users', (req, res) => {
+    route.post( (req, res) => {
 
         //INFORMANDO AO POST QUE QREMOS SAVAR O REGISTRO
         /**
@@ -45,10 +47,22 @@ module.exports = (app) =>{
          */
         db.insert( req.body , (err, users)=>{
             if(err){
-                console.log(`Erro: ${err}`)
-                res.status(400).json({ erro: err })
+                app.utils.error.send(err, req, res)
             }else{
                 res.status(200).json(users);
+            }
+        })
+
+    })
+
+    routeId.get((req, res) =>{
+
+        //ROTA PARA RECUPERAR UM UNICO USUARIO
+        db.findOne({ _id:req.params.id }).exec((err, user) =>{
+            if (err) {
+                app.utils.error.send(err, req, res)
+            } else {
+                res.status(200).json(user);
             }
         })
 

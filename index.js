@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 //ADD O CONSIGN E A PASTA Q QREMOS E ONDE QREMOS A INCLUSAO  
-consign().include('routes').into(app);
+consign().include('routes').include('utils').into(app);
 
 
 app.listen(2000, ()=>{
