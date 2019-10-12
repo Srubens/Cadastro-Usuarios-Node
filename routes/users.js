@@ -1,3 +1,7 @@
+let nedb = require('nedb')
+//NOME DA BASE DE DADOS CARREGAMENTO AUTOMATICO
+let db = new nedb({ filename: 'users.db', autoload: true })
+
 module.exports = (app) =>{
 
     app.get('/users', (req, res) => {
@@ -30,7 +34,19 @@ module.exports = (app) =>{
 
     app.post('/users', (req, res) => {
 
-        res.json(req.body)
+        //INFORMANDO AO POST QUE QREMOS SAVAR O REGISTRO
+        /**
+         * PASSAR UM OBJ JSON, MAIS UMA FNC COM O PARAMETRO DE ERRO E OU REGISTRO QUE FOI SALVO
+         * O ID É GERADO AUTOMATICAMENTE
+         */
+        db.insert( req.body , (err, users)=>{
+            if(err){
+                console.log(`Erro: ${err}`)
+                res.status(400).json({ erro: err })
+            }else{
+                res.status(200).json(users);
+            }
+        })
 
     })
 
