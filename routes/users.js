@@ -6,16 +6,20 @@ module.exports = (app) =>{
 
     app.get('/users', (req, res) => {
 
-        res.statusCode = 200
-        res.setHeader('Content-Type', 'application/json')
-        res.json({
+        //RECUPERANDO DADOS DA BASE
+        db.find({}).sort({name:-1}).exec((err,users)=>{
+            if (err) {
+                console.log(`Erro: ${err}`)
+                res.status(400).json({ erro: err })
+            } else {
 
-            users: [{
-                id: 1,
-                name: 'Rubens Filipe',
-                email: 'rubensfilipe6@gmail.com'
-            }]
-
+                res.statusCode = 200
+                res.setHeader('Content-Type', 'application/json')
+                res.json({
+                    users
+                })
+            
+            }
         })
 
     })
