@@ -68,4 +68,34 @@ module.exports = (app) =>{
 
     })
 
+    //EDITANDO O USUARIO
+    routeId.put((req, res) =>{
+
+        //ROTA PARA RECUPERAR UM UNICO USUARIO
+        db.update({ _id:req.params.id }, req.body, err =>{
+            if (err) {
+                app.utils.error.send(err, req, res)
+            } else {
+                res.status(200).json(Object.assign(req.params, req.body));
+            }
+        })
+
+    })
+
+
+    //DELETANDO DADOS
+    routeId.delete((req, res) =>{
+
+        //ROTA PARA RECUPERAR UM UNICO USUARIO
+        db.remove({ _id:req.params.id }, {}, err =>{
+            if (err) {
+                app.utils.error.send(err, req, res)
+            } else {
+                console.log(`O usuario com o id: ${req.params.id} foi deletado`);
+                res.status(200).json(req.params);
+            }
+        })
+
+    })
+
 };
