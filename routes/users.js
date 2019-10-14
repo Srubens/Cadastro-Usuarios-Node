@@ -40,6 +40,9 @@ module.exports = (app) =>{
 
     route.post( (req, res) => {
 
+        if(!app.utils.validator.user(app,req,res))
+            return false
+
         //INFORMANDO AO POST QUE QREMOS SAVAR O REGISTRO
         /**
          * PASSAR UM OBJ JSON, MAIS UMA FNC COM O PARAMETRO DE ERRO E OU REGISTRO QUE FOI SALVO
@@ -70,6 +73,9 @@ module.exports = (app) =>{
 
     //EDITANDO O USUARIO
     routeId.put((req, res) =>{
+
+        if(!app.utils.validator.user(app,req,res))
+            return false
 
         //ROTA PARA RECUPERAR UM UNICO USUARIO
         db.update({ _id:req.params.id }, req.body, err =>{
